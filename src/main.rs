@@ -6,7 +6,7 @@ use egui::Vec2;
 fn main() {
     let mut options = eframe::NativeOptions::default();
 
-    options.initial_window_size = Some(Vec2::new(256.0, 64.0));
+    options.initial_window_size = Some(Vec2::new(256.0, 72.0));
     eframe::run_native(
         "egui",
         options,
@@ -36,6 +36,10 @@ impl eframe::App for MyApp{
             if ui.button("Generate Key").clicked(){
                 self.key = generate_oem_key();
             }
+            if ui.button("Copy to clipboard").clicked(){
+                ui.output().copied_text = String::from(&self.key);
+            }
+            
         });
     }
 }
@@ -53,8 +57,12 @@ fn generate_oem_key() -> String{
         mod7[0] = 0; mod7[1] = 0;
         for n in 2..7{mod7[n] = rng.gen::<u32>()%10;}
         for n in 2..7{count+=mod7[n];}
-        if !(count != 0 && count%7 != 0) {
+        if count%7 == 0 && count!=0 {
             break;
+        }
+        else{
+            count=0;
+            mod7 = (0..7).collect();
         }
     }
     let key = format!("{:03}{:02}-OEM-{}-{:05}", day, year, mod7.iter().format(""), unchecked);
