@@ -1,0 +1,11 @@
+[package]
+name = "win95_oem_keygen"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+egui = "0.18.1"
+rand = "0.8.5"
+itertools = "0.10.3"
+eframe = "0.18.0"
