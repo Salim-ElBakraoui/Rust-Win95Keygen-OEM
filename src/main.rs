@@ -3,13 +3,12 @@ use itertools::Itertools;
 use eframe::egui;
 use egui::Vec2;
 
-extern crate msgbox;
-use msgbox::IconType;
+use native_dialog::{MessageDialog, MessageType};
 
 fn main() {
     let mut options = eframe::NativeOptions::default();
     options.resizable = false;
-    options.initial_window_size = Some(Vec2::new(256.0*1.5, 80.0*1.5));
+    options.initial_window_size = Some(Vec2::new(256.0*1.25, 80.0*1.25));
 
 
     eframe::run_native(
@@ -34,7 +33,7 @@ impl Default for MyApp {
 impl eframe::App for MyApp{
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame){
         ctx.set_visuals(egui::Visuals::dark());
-        ctx.set_pixels_per_point(1.5);
+        ctx.set_pixels_per_point(1.25);
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.heading("Rust Win95 Keygen");
             ui.horizontal(|ui| {
@@ -50,7 +49,12 @@ impl eframe::App for MyApp{
 
                 if ui.button("Copy to clipboard").clicked(){
                     ui.output().copied_text = String::from(&self.key);
-                    msgbox::create("egui", "Key copied to clipboard!", IconType::Info).expect("Couldn't display the msgbox");
+                    MessageDialog::new()
+                        .set_type(MessageType::Info)
+                        .set_title("Key copied into clipboard")
+                        .set_text("Done!")
+                        .show_confirm()
+                        .unwrap();
                 }
             });
         });
