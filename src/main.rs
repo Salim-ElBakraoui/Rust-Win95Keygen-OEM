@@ -3,6 +3,9 @@ use itertools::Itertools;
 use eframe::egui;
 use egui::Vec2;
 
+extern crate msgbox;
+use msgbox::IconType;
+
 fn main() {
     let mut options = eframe::NativeOptions::default();
     options.resizable = false;
@@ -47,6 +50,7 @@ impl eframe::App for MyApp{
 
                 if ui.button("Copy to clipboard").clicked(){
                     ui.output().copied_text = String::from(&self.key);
+                    msgbox::create("egui", "Key copied to clipboard!", IconType::Info).expect("Couldn't display the msgbox");
                 }
             });
         });
