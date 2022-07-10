@@ -5,8 +5,10 @@ use egui::Vec2;
 
 fn main() {
     let mut options = eframe::NativeOptions::default();
+    options.resizable = false;
+    options.initial_window_size = Some(Vec2::new(256.0*1.5, 80.0*1.5));
 
-    options.initial_window_size = Some(Vec2::new(256.0, 72.0));
+
     eframe::run_native(
         "egui",
         options,
@@ -28,18 +30,25 @@ impl Default for MyApp {
 
 impl eframe::App for MyApp{
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame){
+        ctx.set_visuals(egui::Visuals::dark());
+        ctx.set_pixels_per_point(1.5);
         egui::CentralPanel::default().show(ctx, |ui| {
+            ui.heading("Rust Win95 Keygen");
             ui.horizontal(|ui| {
                 ui.label("Key: ");
                 ui.label(format!("{}", self.key));
+                
             });
-            if ui.button("Generate Key").clicked(){
-                self.key = generate_oem_key();
-            }
-            if ui.button("Copy to clipboard").clicked(){
-                ui.output().copied_text = String::from(&self.key);
-            }
-            
+
+            ui.horizontal(|ui| {
+                if ui.button("Generate Key").clicked(){
+                    self.key = generate_oem_key();
+                }
+
+                if ui.button("Copy to clipboard").clicked(){
+                    ui.output().copied_text = String::from(&self.key);
+                }
+            });
         });
     }
 }
@@ -65,6 +74,6 @@ fn generate_oem_key() -> String{
             mod7 = (0..7).collect();
         }
     }
-    let key = format!("{:03}{:02}-OEM-{}-{:05}", day, year, mod7.iter().format(""), unchecked);
-    return key;
+
+    return format!("{:03}{:02}-OEM-{}-{:05}", day, year, mod7.iter().format(""), unchecked);
 }
